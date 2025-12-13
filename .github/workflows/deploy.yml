@@ -1,0 +1,46 @@
+name: Deploy Container
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  docker_deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Login to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          file: ./Dockerfile
+          push: true
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/bilge-blog-client:latest
+
+  deploy:
+    needs: docker_deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to VPS
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USERNAME }}
+          key: ${{ secrets.VPS_SSH_KEY }}
+          script: |
+            docker pull ${{ secrets.DOCKERHUB_USERNAME }}/bilge-blog-client:latest
+            docker stop bilge-blog-client || true
+            docker rm bilge-blog-client || true
+            docker image prune -f
+            docker run -d \
+              -p 4200:80 \
+              --name bilge-blog-client \
+              --network proxy \
+              --restart always \
+              ${{ secrets.DOCKERHUB_USERNAME }}/bilge-blog-client:latest
+

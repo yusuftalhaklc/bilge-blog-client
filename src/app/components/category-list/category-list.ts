@@ -12,7 +12,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
-import { CategoryService } from '../../services/category';
+import { CategoryService } from '../../services/category.service';
 import { PagedResponse } from '../../models/common/paged-response.model';
 import { Category as CategoryModel } from '../../models/category/category.model';
 
