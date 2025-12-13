@@ -5,6 +5,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDialogModule, MatDialog } from '@angular/material/dialog';
+import { ConfirmDialogComponent, ConfirmDialogData } from '../confirm-dialog/confirm-dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
@@ -241,34 +242,46 @@ export class CategoryList implements OnInit {
   }
 
   deleteCategory(id: string, name: string): void {
-    if (!confirm(`"${name}" kategorisini silmek istediğinize emin misiniz?`)) {
-      return;
-    }
+    const dialogData: ConfirmDialogData = {
+      title: 'Kategori Sil',
+      message: `"${name}" kategorisini silmek istediğinize emin misiniz?`,
+      confirmText: 'Sil',
+      cancelText: 'İptal'
+    };
 
-    this.categoryService.deleteCategory(id)
-      .subscribe({
-      next: () => {
-        this.snackBar.open('Kategori başarıyla silindi', 'Kapat', {
-            duration: 3000,
-            horizontalPosition: 'end',
-            verticalPosition: 'bottom',
-          });
-          this.loadCategories();
-        },
-      error: (error) => {
-        const errorMessage = error.error?.message || 'Kategori silinirken bir hata oluştu.';
-        this.snackBar.open(
-            errorMessage,
-            'Kapat',
-            {
-              duration: 5000,
-              horizontalPosition: 'end',
-              verticalPosition: 'bottom',
-              panelClass: ['error-snackbar'],
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '400px',
+      data: dialogData
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.categoryService.deleteCategory(id)
+          .subscribe({
+            next: () => {
+              this.snackBar.open('Kategori başarıyla silindi', 'Kapat', {
+                duration: 3000,
+                horizontalPosition: 'end',
+                verticalPosition: 'bottom',
+              });
+              this.loadCategories();
+            },
+            error: (error) => {
+              const errorMessage = error.error?.message || 'Kategori silinirken bir hata oluştu.';
+              this.snackBar.open(
+                errorMessage,
+                'Kapat',
+                {
+                  duration: 5000,
+                  horizontalPosition: 'end',
+                  verticalPosition: 'bottom',
+                  panelClass: ['error-snackbar'],
+                }
+              );
             }
-          );
-        }
-      });
+          });
+      }
+    });
   }
 
   openEditModalFromDropdown(category: CategoryModel): void {
