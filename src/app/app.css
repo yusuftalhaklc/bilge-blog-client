@@ -22,6 +22,16 @@
   font-size: 0.875rem;
 }
 
+.app-footer p:not(:last-child) {
+  margin-bottom: 0.5rem;
+}
+
+.footer-tech {
+  margin-top: 0.5rem;
+  font-size: 0.75rem;
+  color: rgba(0, 0, 0, 0.5);
+}
+
 .app-footer a {
   color: #1976d2;
   text-decoration: none;

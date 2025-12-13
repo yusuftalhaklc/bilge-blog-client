@@ -13,13 +13,24 @@ export class CategoryService {
   private readonly http = inject(HttpClient);
   private readonly apiUrl = `${environment.apiBaseUrl}/Category`;
 
-  getCategories(pageNumber: number = 1, pageSize: number = 9, search: string = ''): Observable<PagedResponse<CategoryModel>> {
+  getCategories(
+    pageNumber: number = 1, 
+    pageSize: number = 9, 
+    search: string = '',
+    sort: 'asc' | 'desc' | '' = '',
+    sortBy: string = ''
+  ): Observable<PagedResponse<CategoryModel>> {
     let params = new HttpParams()
       .set('pageNumber', pageNumber.toString())
       .set('pageSize', pageSize.toString());
 
     if (search && search.trim()) {
       params = params.set('search', search.trim());
+    }
+
+    if (sort && sortBy) {
+      params = params.set('sort', sort);
+      params = params.set('sortBy', sortBy);
     }
 
     return this.http.get<ApiResponse<PagedResponse<CategoryModel>>>(this.apiUrl, { params })

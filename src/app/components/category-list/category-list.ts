@@ -54,8 +54,10 @@ export class CategoryList implements OnInit {
   pageSize = signal<number>(9);
   initialLoad = signal<boolean>(true);
   searchTerm = signal<string>('');
+  
+  currentSort = signal<{ active: string; direction: 'asc' | 'desc' | '' }>({ active: 'name', direction: 'asc' });
 
-  displayedColumns: string[] = ['id', 'name', 'createdDate', 'actions'];
+  displayedColumns: string[] = ['no', 'name', 'createdDate', 'actions'];
 
   showModal = signal<boolean>(false);
   isEditMode = signal<boolean>(false);
@@ -71,13 +73,51 @@ export class CategoryList implements OnInit {
     this.loadCategories();
   }
 
+
+  onSortChange(column: string): void {
+    const current = this.currentSort();
+    let newDirection: 'asc' | 'desc' | '' = 'asc';
+
+    if (current.active === column) {
+      // Toggle direction if same column
+      if (current.direction === 'asc') {
+        newDirection = 'desc';
+      } else if (current.direction === 'desc') {
+        newDirection = 'asc';
+      } else {
+        newDirection = 'asc';
+      }
+    } else {
+      // New column, start with asc
+      newDirection = 'asc';
+    }
+
+    this.currentSort.set({
+      active: column,
+      direction: newDirection
+    });
+
+    this.currentPage.set(1);
+    this.loadCategories();
+  }
+
   loadCategories() {
     if (this.initialLoad()) {
       this.loading.set(true);
     }
     this.error.set(null);
 
-    this.categoryService.getCategories(this.currentPage(), this.pageSize(), this.searchTerm())
+    const sortState = this.currentSort();
+    const sort = sortState.direction === '' ? '' : sortState.direction;
+    const sortBy = sortState.direction === '' ? '' : sortState.active;
+
+    this.categoryService.getCategories(
+      this.currentPage(), 
+      this.pageSize(), 
+      this.searchTerm(),
+      sort as 'asc' | 'desc' | '',
+      sortBy
+    )
       .subscribe({
       next: (response) => {
         this.pagedResponse.set(response);
