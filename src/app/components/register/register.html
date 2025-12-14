@@ -1,0 +1,124 @@
+<div class="register-container">
+  <mat-card class="register-card">
+    <mat-card-content>
+      <div class="register-header">
+        <mat-icon class="register-icon">person_add</mat-icon>
+        <h1 class="register-title">Kayıt Ol</h1>
+        <p class="register-subtitle">Yeni hesap oluşturun</p>
+      </div>
+
+      <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="register-form">
+        <div class="name-fields">
+          <mat-form-field appearance="outline" class="half-width">
+            <mat-label>Ad</mat-label>
+            <input matInput type="text" formControlName="firstName" placeholder="Adınız" required>
+            <mat-icon matPrefix>person</mat-icon>
+            @if (registerForm.get('firstName')?.hasError('required') && registerForm.get('firstName')?.touched) {
+              <mat-error>Ad zorunludur</mat-error>
+            }
+            @if (registerForm.get('firstName')?.hasError('minlength') && registerForm.get('firstName')?.touched) {
+              <mat-error>Ad en az 2 karakter olmalıdır</mat-error>
+            }
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="half-width">
+            <mat-label>Soyad</mat-label>
+            <input matInput type="text" formControlName="lastName" placeholder="Soyadınız" required>
+            <mat-icon matPrefix>person</mat-icon>
+            @if (registerForm.get('lastName')?.hasError('required') && registerForm.get('lastName')?.touched) {
+              <mat-error>Soyad zorunludur</mat-error>
+            }
+            @if (registerForm.get('lastName')?.hasError('minlength') && registerForm.get('lastName')?.touched) {
+              <mat-error>Soyad en az 2 karakter olmalıdır</mat-error>
+            }
+          </mat-form-field>
+        </div>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>E-posta</mat-label>
+          <input matInput type="email" formControlName="email" placeholder="ornek@email.com" required>
+          <mat-icon matPrefix>email</mat-icon>
+          @if (registerForm.get('email')?.hasError('required') && registerForm.get('email')?.touched) {
+            <mat-error>E-posta adresi zorunludur</mat-error>
+          }
+          @if (registerForm.get('email')?.hasError('email') && registerForm.get('email')?.touched) {
+            <mat-error>Geçerli bir e-posta adresi giriniz</mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Şifre</mat-label>
+          <input 
+            matInput 
+            [type]="hidePassword() ? 'password' : 'text'" 
+            formControlName="password" 
+            placeholder="Şifrenizi giriniz" 
+            required>
+          <mat-icon matPrefix>lock</mat-icon>
+          <button 
+            mat-icon-button 
+            matSuffix 
+            (click)="togglePasswordVisibility()" 
+            type="button"
+            [attr.aria-label]="'Şifreyi göster'"
+            [attr.aria-pressed]="hidePassword()">
+            <mat-icon>{{ hidePassword() ? 'visibility_off' : 'visibility' }}</mat-icon>
+          </button>
+          @if (registerForm.get('password')?.hasError('required') && registerForm.get('password')?.touched) {
+            <mat-error>Şifre zorunludur</mat-error>
+          }
+          @if (registerForm.get('password')?.hasError('minlength') && registerForm.get('password')?.touched) {
+            <mat-error>Şifre en az 6 karakter olmalıdır</mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Şifre Tekrar</mat-label>
+          <input 
+            matInput 
+            [type]="hideConfirmPassword() ? 'password' : 'text'" 
+            formControlName="confirmPassword" 
+            placeholder="Şifrenizi tekrar giriniz" 
+            required>
+          <mat-icon matPrefix>lock</mat-icon>
+          <button 
+            mat-icon-button 
+            matSuffix 
+            (click)="toggleConfirmPasswordVisibility()" 
+            type="button"
+            [attr.aria-label]="'Şifreyi göster'"
+            [attr.aria-pressed]="hideConfirmPassword()">
+            <mat-icon>{{ hideConfirmPassword() ? 'visibility_off' : 'visibility' }}</mat-icon>
+          </button>
+          @if (registerForm.get('confirmPassword')?.hasError('required') && registerForm.get('confirmPassword')?.touched) {
+            <mat-error>Şifre tekrarı zorunludur</mat-error>
+          }
+          @if (getPasswordMismatchError()) {
+            <mat-error>Şifreler eşleşmiyor</mat-error>
+          }
+        </mat-form-field>
+
+        <div class="form-actions">
+          <button 
+            mat-raised-button 
+            color="primary" 
+            type="submit" 
+            class="submit-button"
+            [disabled]="registerForm.invalid || loading()">
+            @if (loading()) {
+              <mat-spinner diameter="20" class="inline-spinner"></mat-spinner>
+            }
+            <span>Kayıt Ol</span>
+          </button>
+        </div>
+
+        <div class="register-footer">
+          <p>Zaten hesabınız var mı? 
+            <a routerLink="/login" class="login-link">Giriş Yap</a>
+          </p>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>
+

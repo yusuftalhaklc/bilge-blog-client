@@ -1,0 +1,26 @@
+<mat-card class="post-card" [routerLink]="['/post', post.slug]">
+  <!-- Content Section -->
+  <div class="post-content">
+    <!-- Category Badge -->
+    @if (post.category) {
+      <div class="category-badge">
+        <span>{{ post.category.name.toUpperCase() }}</span>
+      </div>
+    }
+
+    <!-- Title -->
+    <h2 class="post-title">{{ post.title }}</h2>
+
+    <!-- Author Section -->
+    <div class="post-author">
+      <div class="author-avatar">
+        <mat-icon>account_circle</mat-icon>
+      </div>
+      <div class="author-info">
+        <span class="author-name">{{ post.userName }}</span>
+        <span class="post-date">{{ post.createdDate | date: 'dd MMM yyyy' }}</span>
+      </div>
+    </div>
+  </div>
+</mat-card>
+

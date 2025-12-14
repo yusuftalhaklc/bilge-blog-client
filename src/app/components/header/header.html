@@ -1,0 +1,121 @@
+<mat-toolbar class="header-toolbar">
+  <div class="header-container">
+    <!-- Logo/Brand -->
+    <div class="brand-section">
+      <a routerLink="/home" class="brand-link">
+        <mat-icon class="brand-icon">article</mat-icon>
+        <span class="brand-text">Bilge Blog</span>
+      </a>
+    </div>
+
+    <!-- Navigation Links -->
+    <nav class="nav-section">
+      @for (item of navItems; track item.route) {
+      <a 
+        mat-button 
+        [routerLink]="item.route" 
+        routerLinkActive="active-link"
+        [routerLinkActiveOptions]="{exact: item.route === '/home'}"
+        class="nav-link">
+          <mat-icon>{{ item.icon }}</mat-icon>
+          <span>{{ item.label }}</span>
+        </a>
+      }
+    </nav>
+
+    <!-- Auth Section -->
+    @if (isAuthenticated()) {
+      <div class="user-section">
+        <button
+          mat-button
+          #userMenuTrigger="matMenuTrigger"
+          [matMenuTriggerFor]="userMenu"
+          class="user-menu-button"
+          (menuOpened)="onMenuOpened()"
+          (menuClosed)="onMenuClosed()">
+          <span class="user-name-text">{{ fullName() }}</span>
+          <mat-icon class="dropdown-icon">{{ isMenuOpen() ? 'arrow_drop_up' : 'arrow_drop_down' }}</mat-icon>
+        </button>
+        <mat-menu #userMenu="matMenu" class="user-menu">
+          <div class="user-info">
+            <div class="user-info-header">
+              <mat-icon>account_circle</mat-icon>
+              <div class="user-details">
+                <p class="user-full-name">{{ fullName() }}</p>
+                <p class="user-email">{{ currentUser()?.email }}</p>
+              </div>
+            </div>
+          </div>
+          <mat-divider></mat-divider>
+          <button mat-menu-item routerLink="/change-password">
+            <mat-icon>lock_reset</mat-icon>
+            <span>Şifre Değiştir</span>
+          </button>
+          <button mat-menu-item (click)="onLogout()">
+            <mat-icon>logout</mat-icon>
+            <span>Çıkış Yap</span>
+          </button>
+        </mat-menu>
+      </div>
+    } @else {
+      <div class="auth-section">
+        <a mat-button routerLink="/login" class="auth-button login-button">
+          <mat-icon>login</mat-icon>
+          <span>Giriş Yap</span>
+        </a>
+        <a mat-raised-button color="accent" routerLink="/register" class="auth-button register-button">
+          <mat-icon>person_add</mat-icon>
+          <span>Kayıt Ol</span>
+        </a>
+      </div>
+    }
+
+    <!-- Mobile Menu -->
+    <button 
+      mat-icon-button 
+      class="mobile-menu-button"
+      [matMenuTriggerFor]="mobileMenu"
+      aria-label="Menu">
+      <mat-icon>menu</mat-icon>
+    </button>
+    <mat-menu #mobileMenu="matMenu" class="mobile-menu">
+      @for (item of navItems; track item.route) {
+        <button 
+          mat-menu-item 
+          [routerLink]="item.route"
+          routerLinkActive="active-menu-item"
+          [routerLinkActiveOptions]="{exact: item.route === '/home'}">
+          <mat-icon>{{ item.icon }}</mat-icon>
+          <span>{{ item.label }}</span>
+        </button>
+      }
+      <mat-divider></mat-divider>
+      @if (isAuthenticated()) {
+        <div class="mobile-user-info">
+          <div class="mobile-user-details">
+            <mat-icon>account_circle</mat-icon>
+            <div>
+              <p class="mobile-user-name">{{ fullName() }}</p>
+              <p class="mobile-user-email">{{ currentUser()?.email }}</p>
+            </div>
+          </div>
+        </div>
+        <mat-divider></mat-divider>
+        <button mat-menu-item (click)="onLogout()">
+          <mat-icon>logout</mat-icon>
+          <span>Çıkış Yap</span>
+        </button>
+      } @else {
+        <button mat-menu-item routerLink="/login">
+          <mat-icon>login</mat-icon>
+          <span>Giriş Yap</span>
+        </button>
+        <button mat-menu-item routerLink="/register">
+          <mat-icon>person_add</mat-icon>
+          <span>Kayıt Ol</span>
+        </button>
+      }
+    </mat-menu>
+  </div>
+</mat-toolbar>
+

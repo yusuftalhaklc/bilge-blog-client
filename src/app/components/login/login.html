@@ -1,0 +1,72 @@
+<div class="login-container">
+  <mat-card class="login-card">
+    <mat-card-content>
+      <div class="login-header">
+        <mat-icon class="login-icon">lock</mat-icon>
+        <h1 class="login-title">Giriş Yap</h1>
+        <p class="login-subtitle">Hesabınıza giriş yapın</p>
+      </div>
+
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login-form">
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>E-posta</mat-label>
+          <input matInput type="email" formControlName="email" placeholder="ornek@email.com" required>
+          <mat-icon matPrefix>email</mat-icon>
+          @if (loginForm.get('email')?.hasError('required') && loginForm.get('email')?.touched) {
+            <mat-error>E-posta adresi zorunludur</mat-error>
+          }
+          @if (loginForm.get('email')?.hasError('email') && loginForm.get('email')?.touched) {
+            <mat-error>Geçerli bir e-posta adresi giriniz</mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Şifre</mat-label>
+          <input 
+            matInput 
+            [type]="hidePassword() ? 'password' : 'text'" 
+            formControlName="password" 
+            placeholder="Şifrenizi giriniz" 
+            required>
+          <mat-icon matPrefix>lock</mat-icon>
+          <button 
+            mat-icon-button 
+            matSuffix 
+            (click)="togglePasswordVisibility()" 
+            type="button"
+            [attr.aria-label]="'Şifreyi göster'"
+            [attr.aria-pressed]="hidePassword()">
+            <mat-icon>{{ hidePassword() ? 'visibility_off' : 'visibility' }}</mat-icon>
+          </button>
+          @if (loginForm.get('password')?.hasError('required') && loginForm.get('password')?.touched) {
+            <mat-error>Şifre zorunludur</mat-error>
+          }
+          @if (loginForm.get('password')?.hasError('minlength') && loginForm.get('password')?.touched) {
+            <mat-error>Şifre en az 6 karakter olmalıdır</mat-error>
+          }
+        </mat-form-field>
+
+        <div class="form-actions">
+          <button 
+            mat-raised-button 
+            color="primary" 
+            type="submit" 
+            class="submit-button"
+            [disabled]="loginForm.invalid || loading()">
+            @if (loading()) {
+              <mat-spinner diameter="20" class="inline-spinner"></mat-spinner>
+            }
+            <span>Giriş Yap</span>
+          </button>
+        </div>
+
+        <div class="login-footer">
+          <p>Hesabınız yok mu? 
+            <a routerLink="/register" class="register-link">Kayıt Ol</a>
+          </p>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>
+

@@ -1,0 +1,377 @@
+.header-toolbar {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 0;
+  height: 64px;
+  background-color: white !important;
+  color: rgba(0, 0, 0, 0.87) !important;
+}
+
+.header-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 1rem;
+  height: 100%;
+}
+
+/* Brand Section */
+.brand-section {
+  display: flex;
+  align-items: center;
+  margin-right: 2rem;
+}
+
+.brand-link {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  text-decoration: none;
+  color: inherit;
+  transition: opacity 0.2s ease;
+}
+
+.brand-link:hover {
+  opacity: 0.9;
+}
+
+.brand-icon {
+  font-size: 28px;
+  width: 28px;
+  height: 28px;
+  color: #1976d2 !important;
+}
+
+.brand-text {
+  font-size: 1.25rem;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  color: rgba(0, 0, 0, 0.87) !important;
+}
+
+/* Navigation Section */
+.nav-section {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex: 1;
+}
+
+.nav-link {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: rgba(0, 0, 0, 0.87) !important;
+  transition: background-color 0.2s ease;
+  border-radius: 4px;
+  padding: 0.5rem 1rem;
+}
+
+.nav-link:hover {
+  background-color: rgba(0, 0, 0, 0.04);
+}
+
+.nav-link.active-link {
+  background-color: rgba(25, 118, 210, 0.1);
+  color: #1976d2 !important;
+  font-weight: 500;
+}
+
+.nav-link.active-link mat-icon {
+  color: #1976d2 !important;
+}
+
+.nav-link mat-icon {
+  font-size: 20px;
+  width: 20px;
+  height: 20px;
+  color: rgba(0, 0, 0, 0.6) !important;
+}
+
+/* Auth Section */
+.auth-section {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-left: auto;
+}
+
+/* User Section */
+.user-section {
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+  min-width: 200px;
+  justify-content: flex-end;
+}
+
+.user-menu-button {
+  display: flex !important;
+  align-items: center !important;
+  gap: 0.5rem;
+  color: rgba(0, 0, 0, 0.87) !important;
+  text-decoration: none;
+  width: 100%;
+  justify-content: flex-start !important;
+  position: relative;
+  font-weight: 500;
+}
+
+.user-menu-button:hover {
+  background-color: rgba(0, 0, 0, 0.04);
+}
+
+.user-menu-button mat-icon {
+  color: rgba(0, 0, 0, 0.6) !important;
+}
+
+
+.dropdown-icon {
+  font-size: 20px !important;
+  width: 20px !important;
+  height: 20px !important;
+  flex-shrink: 0 !important;
+  margin-left: auto !important;
+  order: 3;
+}
+
+/* Override Material button internal structure */
+::ng-deep .user-menu-button .mdc-button__label {
+  display: flex !important;
+  align-items: center !important;
+  width: 100% !important;
+  justify-content: flex-start !important;
+  gap: 0.5rem;
+  font-weight: 500;
+  flex-direction: row !important;
+}
+
+
+.user-name-text {
+  order: 2 !important;
+  flex: 1 !important;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: 0;
+  font-weight: 500;
+}
+
+::ng-deep .user-menu-button .mdc-button__label > .user-name-text {
+  order: 2 !important;
+  flex: 1 !important;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: 0;
+}
+
+::ng-deep .user-menu-button .mdc-button__label > .dropdown-icon {
+  order: 3 !important;
+  flex-shrink: 0 !important;
+  margin-left: auto !important;
+}
+
+.user-menu {
+  min-width: 250px;
+}
+
+.user-info {
+  padding: 1rem;
+}
+
+.user-info-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.user-info-header mat-icon {
+  font-size: 40px;
+  width: 40px;
+  height: 40px;
+  color: #1976d2;
+}
+
+.user-details {
+  flex: 1;
+}
+
+.user-full-name {
+  margin: 0 0 0.25rem 0;
+  font-weight: 500;
+  color: rgba(0, 0, 0, 0.87);
+  font-size: 0.9375rem;
+}
+
+.user-email {
+  margin: 0;
+  color: rgba(0, 0, 0, 0.6);
+  font-size: 0.875rem;
+}
+
+.mobile-user-info {
+  padding: 1rem;
+}
+
+.mobile-user-details {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.mobile-user-details mat-icon {
+  font-size: 40px;
+  width: 40px;
+  height: 40px;
+  color: #1976d2;
+}
+
+.mobile-user-name {
+  margin: 0 0 0.25rem 0;
+  font-weight: 500;
+  color: rgba(0, 0, 0, 0.87);
+  font-size: 0.9375rem;
+}
+
+.mobile-user-email {
+  margin: 0;
+  color: rgba(0, 0, 0, 0.6);
+  font-size: 0.875rem;
+}
+
+.auth-button {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  white-space: nowrap;
+  text-decoration: none;
+}
+
+.login-button {
+  color: rgba(0, 0, 0, 0.87) !important;
+}
+
+.login-button:hover {
+  background-color: rgba(0, 0, 0, 0.04);
+}
+
+.login-button mat-icon {
+  color: rgba(0, 0, 0, 0.6) !important;
+}
+
+.register-button {
+  color: white !important;
+  background-color: #1976d2 !important;
+}
+
+.register-button:hover {
+  background-color: #1565c0 !important;
+}
+
+.register-button mat-icon {
+  color: white !important;
+}
+
+.auth-button mat-icon {
+  font-size: 20px;
+  width: 20px;
+  height: 20px;
+}
+
+/* Mobile Menu Button */
+.mobile-menu-button {
+  display: none;
+  color: rgba(0, 0, 0, 0.87) !important;
+}
+
+.mobile-menu-button mat-icon {
+  color: rgba(0, 0, 0, 0.87) !important;
+}
+
+/* Mobile Menu */
+.mobile-menu {
+  display: none;
+}
+
+/* Responsive Design */
+@media (max-width: 960px) {
+  .nav-section {
+    display: none;
+  }
+
+  .auth-section {
+    display: none;
+  }
+
+  .mobile-menu-button {
+    display: block;
+    margin-left: auto;
+  }
+
+  .mobile-menu {
+    display: block;
+  }
+
+  .brand-section {
+    margin-right: 1rem;
+  }
+
+  .brand-text {
+    font-size: 1.1rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .header-container {
+    padding: 0 0.75rem;
+  }
+
+  .brand-text {
+    font-size: 1rem;
+  }
+
+  .brand-icon {
+    font-size: 24px;
+    width: 24px;
+    height: 24px;
+  }
+}
+
+/* Material Button Overrides for Toolbar */
+::ng-deep .header-toolbar .mat-mdc-button:not(:disabled) {
+  color: rgba(0, 0, 0, 0.87) !important;
+}
+
+::ng-deep .header-toolbar .mat-mdc-button .mat-icon {
+  color: rgba(0, 0, 0, 0.6) !important;
+}
+
+::ng-deep .header-toolbar .mat-mdc-raised-button:not(:disabled) {
+  color: white !important;
+  background-color: #1976d2 !important;
+}
+
+::ng-deep .header-toolbar .mat-mdc-raised-button:not(:disabled):hover {
+  background-color: #1565c0 !important;
+}
+
+::ng-deep .header-toolbar .mat-mdc-raised-button .mat-icon {
+  color: white !important;
+}
+
+/* Active menu item in mobile menu */
+::ng-deep .active-menu-item {
+  background-color: rgba(25, 118, 210, 0.1) !important;
+  color: #1976d2 !important;
+}
+
+::ng-deep .active-menu-item mat-icon {
+  color: #1976d2 !important;
+}
+

@@ -1,0 +1,72 @@
+<div class="post-detail-container">
+  <!-- Loading State -->
+  @if (loading()) {
+    <div class="loading-container">
+      <mat-spinner diameter="50"></mat-spinner>
+      <p>Post yükleniyor...</p>
+    </div>
+  }
+
+  <!-- Post Content -->
+  @if (!loading() && post()) {
+    <article class="post-article">
+      <!-- Header -->
+      <div class="post-header">
+        @if (post()!.category) {
+          <div class="category-badge">
+            <span>{{ post()!.category.name.toUpperCase() }}</span>
+          </div>
+        }
+        
+        <h1 class="post-title">{{ post()!.title }}</h1>
+        
+        <div class="post-meta">
+          <div class="author-info">
+            <div class="author-avatar">
+              <mat-icon>account_circle</mat-icon>
+            </div>
+            <div class="author-details">
+              <span class="author-name">{{ post()!.userName }}</span>
+              <span class="post-date">{{ post()!.createdDate | date: 'dd MMMM yyyy, HH:mm' }}</span>
+            </div>
+          </div>
+          
+          <div class="post-stats">
+            <span class="stat-item">
+              <mat-icon [class.liked]="post()!.isLiked">favorite</mat-icon>
+              {{ post()!.totalLikeCount }}
+            </span>
+            <span class="stat-item">
+              <mat-icon>comment</mat-icon>
+              {{ post()!.totalCommentCount }}
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Content -->
+      <div class="post-content" [innerHTML]="post()!.content || ''"></div>
+
+      <!-- Tags -->
+      @if (post()!.tags && post()!.tags.length > 0) {
+        <div class="tags-section">
+          @for (tag of post()!.tags; track tag.id) {
+            <mat-chip class="tag-chip">{{ tag.name }}</mat-chip>
+          }
+        </div>
+      }
+    </article>
+  }
+
+  <!-- Error State -->
+  @if (!loading() && error() && !post()) {
+    <div class="error-container">
+      <mat-icon class="error-icon">error_outline</mat-icon>
+      <p>{{ error() }}</p>
+      <button mat-raised-button color="primary" routerLink="/home">
+        Ana Sayfaya Dön
+      </button>
+    </div>
+  }
+</div>
+
